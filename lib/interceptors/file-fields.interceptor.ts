@@ -1,12 +1,15 @@
 import { CallHandler, ExecutionContext, Inject, mixin, NestInterceptor, Optional, Type, } from '@nestjs/common'
 import multer from 'fastify-multer'
 import { MULTER_MODULE_OPTIONS } from '../files.constants'
-import { MulterModuleOptions } from '../interfaces'
-import { transformException } from '../multer/multer.utils'
+import { MulterField, MulterModuleOptions, MulterOptions } from '../interfaces'
+import { transformException } from '../multer'
 
 type MulterInstance = ReturnType<typeof multer['default']>
 
-export function NoFilesInterceptor(): Type<NestInterceptor> {
+export function FileFieldsInterceptor(
+  uploadFields: MulterField[],
+  localOptions?: MulterOptions
+): Type<NestInterceptor> {
   class MixinInterceptor implements NestInterceptor {
     protected multer: MulterInstance
 
@@ -17,6 +20,7 @@ export function NoFilesInterceptor(): Type<NestInterceptor> {
     ) {
       this.multer = multer({
         ...options,
+        ...localOptions,
       })
     }
 
@@ -28,7 +32,7 @@ export function NoFilesInterceptor(): Type<NestInterceptor> {
 
       await new Promise<void>((resolve, reject) =>
         // @ts-expect-errornot using method as pre-handler, so signature is different
-        this.multer.none()(
+        this.multer.fields(uploadFields)(
           ctx.getRequest(),
           ctx.getResponse(),
           (err: Error) => {

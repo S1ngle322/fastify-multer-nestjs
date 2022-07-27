@@ -2,13 +2,12 @@ import { CallHandler, ExecutionContext, Inject, mixin, NestInterceptor, Optional
 import multer from 'fastify-multer'
 import { MULTER_MODULE_OPTIONS } from '../files.constants'
 import { MulterModuleOptions, MulterOptions } from '../interfaces'
-import { transformException } from '../multer/multer.utils'
+import { transformException } from '../multer'
 
-type MulterInstance = ReturnType<typeof multer['default']>;
+type MulterInstance = ReturnType<typeof multer['default']>
 
-export function FilesInterceptor(
+export function FileInterceptor(
   fieldName: string,
-  maxCount?: number,
   localOptions?: MulterOptions
 ): Type<NestInterceptor> {
   class MixinInterceptor implements NestInterceptor {
@@ -17,12 +16,12 @@ export function FilesInterceptor(
     constructor(
       @Optional()
       @Inject(MULTER_MODULE_OPTIONS)
-      options: MulterModuleOptions = {}
+      options: MulterModuleOptions = {},
     ) {
       this.multer = multer({
         ...options,
         ...localOptions,
-      })
+      });
     }
 
     async intercept(
@@ -30,10 +29,9 @@ export function FilesInterceptor(
       next: CallHandler
     ) {
       const ctx = context.switchToHttp()
-
       await new Promise<void>((resolve, reject) =>
         // @ts-expect-errornot using method as pre-handler, so signature is different
-        this.multer.array(fieldName, maxCount)(
+        this.multer.single(fieldName)(
           ctx.getRequest(),
           ctx.getResponse(),
           (err: Error) => {
@@ -44,7 +42,7 @@ export function FilesInterceptor(
             resolve()
           }
         )
-      )
+      );
       return next.handle()
     }
   }
