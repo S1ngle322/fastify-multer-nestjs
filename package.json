@@ -1,5 +1,5 @@
 {
-  "name": "@icons8-nestjs-fastify-multer",
+  "name": "@icons8/nestjs-fastify-multer",
   "version": "0.0.1",
   "description": "A File Upload package for NestJS when using fastify",
   "scripts": {
@@ -25,17 +25,13 @@
   },
   "peerDependencies": {
     "@nestjs/common": "^9.0.0",
-    "@nestjs/platform-fastify": "^9.0.0",
-    "rxjs": "7.1.0"
+    "@nestjs/platform-fastify": "^9.0.5"
   },
   "peerDependenciesMeta": {
     "@nestjs/common": {
       "optional": false
     },
     "@nestjs/platform-fastify": {
-      "optional": false
-    },
-    "rxjs": {
       "optional": false
     }
   }

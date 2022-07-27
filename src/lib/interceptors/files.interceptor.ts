@@ -1,6 +1,5 @@
 import { CallHandler, ExecutionContext, Inject, mixin, NestInterceptor, Optional, Type, } from '@nestjs/common'
 import multer from 'fastify-multer'
-import { Observable } from 'rxjs'
 import { MULTER_MODULE_OPTIONS } from '../files.constants'
 import { MulterModuleOptions, MulterOptions } from '../interfaces'
 import { transformException } from '../multer/multer.utils'
@@ -29,7 +28,7 @@ export function FilesInterceptor(
     async intercept(
       context: ExecutionContext,
       next: CallHandler
-    ): Promise<Observable<Error>> {
+    ) {
       const ctx = context.switchToHttp()
 
       await new Promise<void>((resolve, reject) =>
