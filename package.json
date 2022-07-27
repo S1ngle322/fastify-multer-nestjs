@@ -1,18 +1,16 @@
 {
   "name": "@icons8/nestjs-fastify-multer",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "A File Upload package for NestJS when using fastify",
   "scripts": {
     "build": "tsc"
   },
-
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
   "files": [
     "dist/**/*.js",
     "dist/**/*.d.ts"
   ],
-
   "keywords": [
     "fastify",
     "nestjs",
