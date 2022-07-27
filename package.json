@@ -5,6 +5,14 @@
   "scripts": {
     "build": "tsc"
   },
+
+  "main": "dist/lib/index.js",
+  "types": "dist/lib/index.d.ts",
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
+  ],
+
   "keywords": [
     "fastify",
     "nestjs",
