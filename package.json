@@ -3,7 +3,8 @@
   "version": "1.0.2",
   "description": "A File Upload package for NestJS when using fastify",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "tsc"
   },
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
